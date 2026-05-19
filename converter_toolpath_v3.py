@@ -470,34 +470,7 @@ def normalize_equals(code):
 def clean_motion_or_command(code):
     return normalize_equals(code)
 
-def convert_setup_command(code):
-    """
-    Convert/pass through setup commands requested by user:
-    - TC_TRAFO_ON(0) -> TRAORI
-    - TRAFOOF -> TRAFOOF
-    - G71 -> G71
-    - G54 -> G54
-    - SET_G54(...) -> SET_G54(...)
-    - TOOL_LEN(0.0), G500, TC_LASER_REQUEST(1) are ignored elsewhere
-    """
-    c = strip_block_number(code).strip()
 
-    if re.match(r"^TC_TRAFO_ON\s*\(\s*0\s*\)", c, re.I):
-        return "TRAORI"
-
-    if re.match(r"^TRAFOOF\b", c, re.I):
-        return "TRAFOOF"
-
-    if re.match(r"^G71\b", c, re.I):
-        return "G71"
-
-    if re.match(r"^G54\b", c, re.I):
-        return "G54"
-
-    if re.match(r"^SET_G54\s*\(", c, re.I):
-        return c
-
-    return None
 
 def parse_toolpath_lines(lines):
     start = find_deposition_start_index(lines)
@@ -536,10 +509,7 @@ def parse_toolpath_lines(lines):
 
         # Setup commands that appear inside the post-processed toolpath region
         # should be copied/converted, not reported as unhandled.
-        converted_setup = convert_setup_command(code_clean)
-        if converted_setup:
-            output.append({"code": converted_setup, "comment": None})
-            continue
+      
 
         if is_ignored_logic_line(code_clean):
             report["ignored_logic"] += 1
