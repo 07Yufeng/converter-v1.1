@@ -704,7 +704,7 @@ def build_mpf(parsed):
     build_hopper_block(bw, parsed)
 
     if parsed.get("origin_section"):
-        bw.section("ORIGIN ")
+        bw.section("ORIGIN (COMMENT OUT IF UNNECESSARY)")
         for item in parsed["origin_section"]:
             if item.get("code") is None:
                 bw.add(comment=item.get("comment", ""))
