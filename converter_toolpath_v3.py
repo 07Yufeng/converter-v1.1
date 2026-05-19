@@ -746,7 +746,6 @@ def get_conversion_report(hp_text: str, source_name: str = "uploaded.HP", power_
     return {
         "source_name": parsed["source_name"],
         "power_head": parsed["power_head"],
-        "layer_count": parsed["layer_count"],
         "puis_laser": parsed["puis_laser"],
         "unhandled_count": len(report["unhandled"]),
         "unhandled": report["unhandled"][:100],
