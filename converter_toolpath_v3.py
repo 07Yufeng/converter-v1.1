@@ -661,7 +661,7 @@ def build_hopper_block(bw, parsed):
     bw.add("G04 F=10", "Powder stabilization dwell")
 
 def build_toolpath(bw, parsed):
-    bw.section("TOOLPATH FROM HP/LST")
+    bw.section("TOOLPATH ")
     for item in parsed["toolpath_items"]:
         if item.get("blank"):
             bw.add()
