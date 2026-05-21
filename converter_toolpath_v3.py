@@ -423,7 +423,7 @@ def convert_tc_acl(code):
     laser = CONFIG["beam"]["laser"]
     if args[0] == "1":
         return laser["fire_off"]
-    if args[0] == "2":
+    if args[0] == "2" or args[0] =="4":
         return laser["fire_on"]
     return None
 
