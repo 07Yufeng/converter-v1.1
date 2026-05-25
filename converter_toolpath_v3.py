@@ -661,7 +661,7 @@ def build_hopper_block(bw, parsed):
     bw.add("G04 F=10", "Powder stabilization dwell")
 
 def build_toolpath(bw, parsed):
-    bw.section("TOOLPATH ")
+    bw.section("TOOLPATH FROM HP/LST")
     for item in parsed["toolpath_items"]:
         if item.get("blank"):
             bw.add()
@@ -720,7 +720,11 @@ def build_mpf(parsed):
     build_toolpath(bw, parsed)
     bw.section("END PROGRAM")
     bw.add(f"{laser['fire_off']}")
-    bw.add(f"{hopper['off']}", f"Hopper {parsed['hopper']} OFF")
+    bw.add(";M161                ;Hopper 1 OFF (turntable + stirrer + gas")
+    bw.add(";M163                ;Hopper 2 OFF (turntable + stirrer + gas")
+    bw.add(";M165                ;Hopper 3 OFF (turntable + stirrer + gas")
+    bw.add(";M167                ;Hopper 4 OFF (turntable + stirrer + gas")
+    bw.add(";M169                ;Hopper 5 OFF (turntable + stirrer + gas")
     bw.add(f"{gas['secondary_off']}", "Secondary gas OFF")
     bw.add(f"{gas['central_off']}", "Central gas OFF")
     bw.add("M02", "Program end")
@@ -771,4 +775,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
